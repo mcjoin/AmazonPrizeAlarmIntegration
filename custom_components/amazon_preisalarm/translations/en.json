@@ -1,0 +1,104 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Amazon Preisalarm",
+        "description": "Choose how often prices are checked. Afterwards add products via \"Add product\" on the integration entry.",
+        "data": {
+          "scan_interval": "Scan interval"
+        },
+        "data_description": {
+          "scan_interval": "Minutes between two price checks (at least 15 to avoid Amazon's bot protection)."
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Amazon Preisalarm is already set up. Add more products via \"Add product\"."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Amazon Preisalarm",
+        "data": {
+          "scan_interval": "Scan interval"
+        },
+        "data_description": {
+          "scan_interval": "Minutes between two price checks."
+        }
+      }
+    }
+  },
+  "config_subentries": {
+    "product": {
+      "entry_type": "Product",
+      "initiate_flow": {
+        "user": "Add product"
+      },
+      "step": {
+        "user": {
+          "title": "Add product",
+          "description": "Paste an Amazon product link (short links like amzn.eu/d/… work too). The current price is stored as reference price.",
+          "data": {
+            "url": "Amazon link",
+            "name": "Name",
+            "target_price": "Target price"
+          },
+          "data_description": {
+            "name": "Optional. Defaults to the product title.",
+            "target_price": "Optional. Creates a binary sensor that turns on once the price drops to or below it."
+          }
+        },
+        "reconfigure": {
+          "title": "Edit product",
+          "description": "{url}",
+          "data": {
+            "name": "Name",
+            "target_price": "Target price"
+          },
+          "data_description": {
+            "target_price": "Leave empty to remove the target price sensor."
+          }
+        }
+      },
+      "error": {
+        "invalid_url": "This is not a valid Amazon product link.",
+        "cannot_connect": "Could not reach Amazon.",
+        "blocked": "Amazon blocked the request with a captcha. Please try again in a few minutes.",
+        "cannot_parse": "The page could not be recognized as a product page."
+      },
+      "abort": {
+        "already_configured": "This product is already being tracked.",
+        "reconfigure_successful": "Product updated."
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "price": {
+        "name": "Price"
+      },
+      "price_change": {
+        "name": "Price change"
+      },
+      "price_change_percent": {
+        "name": "Price change percent"
+      }
+    },
+    "binary_sensor": {
+      "target_reached": {
+        "name": "Target price reached"
+      }
+    },
+    "button": {
+      "reset_reference": {
+        "name": "Reset reference price"
+      }
+    }
+  },
+  "exceptions": {
+    "no_current_price": {
+      "message": "No current price is known yet."
+    }
+  }
+}

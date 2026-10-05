@@ -1,0 +1,104 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Amazon Preisalarm",
+        "description": "Lege fest, wie oft die Preise geprüft werden. Produkte fügst du danach über „Produkt hinzufügen“ beim Integrationseintrag hinzu.",
+        "data": {
+          "scan_interval": "Abfrageintervall"
+        },
+        "data_description": {
+          "scan_interval": "Minuten zwischen zwei Preisprüfungen (mind. 15, um Amazons Bot-Schutz nicht auszulösen)."
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Amazon Preisalarm ist bereits eingerichtet. Füge weitere Produkte über „Produkt hinzufügen“ hinzu."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Amazon Preisalarm",
+        "data": {
+          "scan_interval": "Abfrageintervall"
+        },
+        "data_description": {
+          "scan_interval": "Minuten zwischen zwei Preisprüfungen."
+        }
+      }
+    }
+  },
+  "config_subentries": {
+    "product": {
+      "entry_type": "Produkt",
+      "initiate_flow": {
+        "user": "Produkt hinzufügen"
+      },
+      "step": {
+        "user": {
+          "title": "Produkt hinzufügen",
+          "description": "Füge einen Amazon-Produktlink ein (auch Kurzlinks wie amzn.eu/d/… funktionieren). Der aktuelle Preis wird als Referenzpreis gespeichert.",
+          "data": {
+            "url": "Amazon-Link",
+            "name": "Name",
+            "target_price": "Zielpreis"
+          },
+          "data_description": {
+            "name": "Optional. Ohne Angabe wird der Produkttitel verwendet.",
+            "target_price": "Optional. Erzeugt einen Binärsensor, der angeht, sobald der Preis darunter liegt."
+          }
+        },
+        "reconfigure": {
+          "title": "Produkt bearbeiten",
+          "description": "{url}",
+          "data": {
+            "name": "Name",
+            "target_price": "Zielpreis"
+          },
+          "data_description": {
+            "target_price": "Leer lassen, um den Zielpreis-Sensor zu entfernen."
+          }
+        }
+      },
+      "error": {
+        "invalid_url": "Das ist kein gültiger Amazon-Produktlink.",
+        "cannot_connect": "Amazon konnte nicht erreicht werden.",
+        "blocked": "Amazon hat die Anfrage mit einem Captcha blockiert. Bitte in ein paar Minuten erneut versuchen.",
+        "cannot_parse": "Die Seite konnte nicht als Produktseite erkannt werden."
+      },
+      "abort": {
+        "already_configured": "Dieses Produkt wird bereits überwacht.",
+        "reconfigure_successful": "Produkt wurde aktualisiert."
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "price": {
+        "name": "Preis"
+      },
+      "price_change": {
+        "name": "Preisänderung"
+      },
+      "price_change_percent": {
+        "name": "Preisänderung Prozent"
+      }
+    },
+    "binary_sensor": {
+      "target_reached": {
+        "name": "Zielpreis erreicht"
+      }
+    },
+    "button": {
+      "reset_reference": {
+        "name": "Referenzpreis zurücksetzen"
+      }
+    }
+  },
+  "exceptions": {
+    "no_current_price": {
+      "message": "Es ist noch kein aktueller Preis bekannt."
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "domain": "amazon_preisalarm",
+  "name": "Amazon Preisalarm",
+  "codeowners": ["@mcjoin"],
+  "config_flow": true,
+  "documentation": "https://github.com/mcjoin/AmazonPrizeAlarmIntegration",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/mcjoin/AmazonPrizeAlarmIntegration/issues",
+  "requirements": ["beautifulsoup4>=4.12.0"],
+  "single_config_entry": true,
+  "version": "0.1.0"
+}
